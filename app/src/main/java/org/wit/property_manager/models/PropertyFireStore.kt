@@ -1,15 +1,22 @@
 package org.wit.property_manager.models
 
-
 import android.content.Context
+import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import org.wit.property_manager.helpers.readImageFromPath
+import timber.log.Timber.i
+import java.io.ByteArrayOutputStream
+import java.io.File
+
 
 class PropertyFireStore(val context: Context) : PropertyStore {
     val properties = ArrayList<PropertyModel>()
     lateinit var userId: String
     lateinit var db: DatabaseReference
-
+    lateinit var st: StorageReference
     override suspend fun findAll(): List<PropertyModel> {
         return properties
     }
@@ -25,6 +32,7 @@ class PropertyFireStore(val context: Context) : PropertyStore {
             property.fbId = key
             properties.add(property)
             db.child("users").child(userId).child("properties").child(key).setValue(property)
+            updateImage(property)
         }
     }
 
@@ -40,7 +48,9 @@ class PropertyFireStore(val context: Context) : PropertyStore {
         }
 
         db.child("users").child(userId).child("properties").child(property.fbId).setValue(property)
-
+        if(property.image.length > 0){
+            updateImage(property)
+        }
     }
 
     override suspend fun delete(property: PropertyModel) {
@@ -51,7 +61,6 @@ class PropertyFireStore(val context: Context) : PropertyStore {
     override suspend fun clear() {
         properties.clear()
     }
-
 
     fun fetchProperties(propertiesReady: () -> Unit) {
         val valueEventListener = object : ValueEventListener {
@@ -68,10 +77,40 @@ class PropertyFireStore(val context: Context) : PropertyStore {
             }
         }
         userId = FirebaseAuth.getInstance().currentUser!!.uid
-        // TODO remove link here and replace with string resource
+        st = FirebaseStorage.getInstance().reference
         db = FirebaseDatabase.getInstance("https://propertymanager-gh-default-rtdb.firebaseio.com/").reference
         properties.clear()
         db.child("users").child(userId).child("properties")
             .addListenerForSingleValueEvent(valueEventListener)
     }
+    fun updateImage(property: PropertyModel){
+        if(property.image != ""){
+            val fileName = File(property.image)
+            val imageName = fileName.getName()
+
+            var imageRef = st.child(userId + '/' + imageName)
+            val baos = ByteArrayOutputStream()
+            val bitmap = readImageFromPath(context, property.image)
+
+            bitmap?.let {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
+
+                val data = baos.toByteArray()
+                val uploadTask = imageRef.putBytes(data)
+
+                uploadTask.addOnSuccessListener { taskSnapshot ->
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                        property.image = it.toString()
+                        db.child("users").child(userId).child("properties").child(property.fbId).setValue(property)
+                    }
+                }.addOnFailureListener{
+                    var errorMessage = it.message
+                    i("Failure: $errorMessage")
+                }
+            }
+
+        }
+    }
 }
+
+
