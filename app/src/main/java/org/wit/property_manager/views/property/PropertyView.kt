@@ -8,6 +8,9 @@ import android.view.MenuItem
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.wit.property_manager.R
 import org.wit.property_manager.databinding.ActivityPropertyBinding
 import org.wit.property_manager.models.PropertyModel
@@ -31,7 +34,12 @@ class PropertyView : AppCompatActivity() {
         presenter = PropertyPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cacheProperty(binding.propertyTitle.text.toString(), binding.description.text.toString(), binding.propertyType.text.toString(), binding.propertyStatus.text.toString())
+            presenter.cacheProperty(
+                binding.propertyTitle.text.toString(),
+                binding.description.text.toString(),
+                binding.propertyType.text.toString(),
+                binding.propertyStatus.text.toString()
+            )
             presenter.doSelectImage()
         }
 /*
@@ -41,7 +49,12 @@ class PropertyView : AppCompatActivity() {
         }
 */
         binding.mapView2.setOnClickListener {
-            presenter.cacheProperty(binding.propertyTitle.text.toString(), binding.description.text.toString(), binding.propertyType.text.toString(), binding.propertyStatus.text.toString())
+            presenter.cacheProperty(
+                binding.propertyTitle.text.toString(),
+                binding.description.text.toString(),
+                binding.propertyType.text.toString(),
+                binding.propertyStatus.text.toString()
+            )
             presenter.doSetLocation()
         }
 
@@ -57,10 +70,9 @@ class PropertyView : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_property, menu)
         val deleteMenu: MenuItem = menu.findItem(R.id.item_delete)
-        if (presenter.edit){
+        if (presenter.edit) {
             deleteMenu.setVisible(true)
-        }
-        else{
+        } else {
             deleteMenu.setVisible(false)
         }
         return super.onCreateOptionsMenu(menu)
@@ -73,11 +85,20 @@ class PropertyView : AppCompatActivity() {
                     Snackbar.make(binding.root, R.string.enter_property_title, Snackbar.LENGTH_LONG)
                         .show()
                 } else {
-                    presenter.doAddOrSave(binding.propertyTitle.text.toString(), binding.description.text.toString(), binding.propertyType.text.toString(), binding.propertyStatus.text.toString())
+                    GlobalScope.launch(Dispatchers.IO) {
+                        presenter.doAddOrSave(
+                            binding.propertyTitle.text.toString(),
+                            binding.description.text.toString(),
+                            binding.propertyType.text.toString(),
+                            binding.propertyStatus.text.toString()
+                        )
+                    }
                 }
             }
             R.id.item_delete -> {
-                presenter.doDelete()
+                GlobalScope.launch(Dispatchers.IO) {
+                    presenter.doDelete()
+                }
             }
             R.id.item_cancel -> {
                 presenter.doCancel()
@@ -92,24 +113,26 @@ class PropertyView : AppCompatActivity() {
         if (binding.description.text.isEmpty()) binding.description.setText(property.description)
         if (binding.propertyType.text.isEmpty()) binding.propertyType.setText(property.type)
         if (binding.propertyStatus.text.isEmpty()) binding.propertyStatus.setText(property.status)
-        Picasso.get()
-            .load(property.image)
-            .into(binding.propertyImage)
 
-        if (property.image != Uri.EMPTY) {
+        if (property.image != "") {
+            Picasso.get()
+                .load(property.image)
+                .into(binding.propertyImage)
             binding.chooseImage.setText(R.string.change_property_image)
         }
-        binding.lat.setText("%.6f".format(property.lat))
-        binding.lng.setText("%.6f".format(property.lng))
+        binding.lat.setText("%.6f".format(property.location.lat))
+        binding.lng.setText("%.6f".format(property.location.lng))
 
     }
-    fun updateImage(image: Uri){
+
+    fun updateImage(image: String) {
         i("Image updated")
         Picasso.get()
             .load(image)
             .into(binding.propertyImage)
         binding.chooseImage.setText(R.string.change_property_image)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         binding.mapView2.onDestroy()

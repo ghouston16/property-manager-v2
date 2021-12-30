@@ -1,12 +1,14 @@
 package org.wit.property_manager.models
 
 interface PropertyStore {
-    fun findAll(): List<PropertyModel>
+    suspend fun findAll(): List<PropertyModel>
     //fun findAll(id: Long): List<PropertyModel>
-    fun findById(id:Long) : PropertyModel?
-    fun create(property: PropertyModel)
-    fun update(property: PropertyModel)
-    fun delete(property: PropertyModel)
+    suspend fun findById(id:Long) : PropertyModel?
+    suspend fun create(property: PropertyModel)
+    suspend fun update(property: PropertyModel)
+    suspend fun delete(property: PropertyModel)
    // fun deleteByUser(id: Long)
-    fun deleteAll()
+   // suspend fun deleteAll()
+    suspend fun clear()
+    //fun fetchProperties(): List<PropertyModel>
 }

@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.wit.property_manager.databinding.ActivityPropertyMapsBinding
 import org.wit.property_manager.databinding.ContentPropertyMapsBinding
 import org.wit.property_manager.main.MainApp
@@ -29,7 +32,9 @@ class PropertyMapsView : AppCompatActivity() , GoogleMap.OnMarkerClickListener{
 
         contentBinding.mapView.onCreate(savedInstanceState)
         contentBinding.mapView.getMapAsync{
-            presenter.doPopulateMap(it)
+            GlobalScope.launch(Dispatchers.Main) {
+                presenter.doPopulateMap(it)
+            }
         }
     }
     fun showProperty(property: PropertyModel) {
@@ -41,7 +46,9 @@ class PropertyMapsView : AppCompatActivity() , GoogleMap.OnMarkerClickListener{
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        presenter.doMarkerSelected(marker)
+        GlobalScope.launch(Dispatchers.Main) {
+            presenter.doMarkerSelected(marker)
+        }
         return true
     }
 

@@ -8,11 +8,11 @@ internal fun getId(): Long {
     return lastId++
 }
 
-class PropertyMemStore: PropertyStore {
+class PropertyMemStore : PropertyStore {
     val properties = ArrayList<PropertyModel>()
     val userProperties = ArrayList<PropertyModel>()
 
-    override fun findAll(): List<PropertyModel>{
+    override suspend fun findAll(): List<PropertyModel> {
         return properties
     }
     /*
@@ -27,14 +27,16 @@ class PropertyMemStore: PropertyStore {
 */
 
 
-    override fun create(property:PropertyModel){
+    override suspend fun create(property: PropertyModel) {
         property.id = getId()
         properties.add(property)
         logAll()
     }
-    override fun delete(property: PropertyModel) {
+
+    override suspend fun delete(property: PropertyModel) {
         properties.remove(property)
     }
+
     /*
     override fun deleteByUser(id: Long) {
         for (property in properties){
@@ -45,12 +47,15 @@ class PropertyMemStore: PropertyStore {
         // todo - find how to pass id of property to be deleted
     }
 
-     */
-    override fun deleteAll(){
+
+    override suspend fun deleteAll() {
         logAll()
         properties.clear()
     }
-    override fun update(property: PropertyModel) {
+
+     */
+
+    override suspend fun update(property: PropertyModel) {
         var foundProperty: PropertyModel? = properties.find { p -> p.id == property.id }
         if (foundProperty != null) {
             foundProperty.title = property.title
@@ -59,17 +64,20 @@ class PropertyMemStore: PropertyStore {
             foundProperty.status = property.status
             //foundProperty.agent = property.agent
             foundProperty.image = property.image
-            foundProperty.lat = property.lat
-            foundProperty.lng = property.lng
-            foundProperty.zoom = property.zoom
+            foundProperty.location = property.location
             logAll()
         }
     }
-    override fun findById(id: Long): PropertyModel?{
+
+    override suspend fun findById(id: Long): PropertyModel? {
         val foundProperty: PropertyModel? = properties.find { it.id == id }
         return foundProperty
-}
-fun logAll(){
-    properties.forEach{ i("${it}")}
-}
+    }
+
+    fun logAll() {
+        properties.forEach { i("${it}") }
+    }
+    override suspend fun clear(){
+        properties.clear()
+    }
 }

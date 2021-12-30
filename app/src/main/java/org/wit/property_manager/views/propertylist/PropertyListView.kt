@@ -5,6 +5,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 import org.wit.property_manager.views.propertylist.PropertyListener
 import org.wit.property_manager.databinding.ActivityPropertyListBinding
@@ -21,20 +25,22 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     lateinit var presenter: PropertyListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        i("Recycler View Loaded")
-        super.onCreate(savedInstanceState)
-        binding = ActivityPropertyListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.toolbar.title = title
+
+            super.onCreate(savedInstanceState)
+            binding = ActivityPropertyListBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+
+            //update Toolbar title
+            binding.toolbar.title = title
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                binding.toolbar.title = "${title}: ${user.email}"
+            }
         setSupportActionBar(binding.toolbar)
         presenter = PropertyListPresenter(this)
-        //app = application as MainApp
-
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter =
-            PropertyAdapter(presenter.getProperties(), this)
-
+        updateRecyclerView()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -43,9 +49,11 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
 
     override fun onResume() {
         //update the view
+        super.onResume()
+        updateRecyclerView()
         binding.recyclerView.adapter?.notifyDataSetChanged()
         i("recyclerView onResume")
-        super.onResume()
+
     }
 
 
@@ -53,6 +61,11 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         when (item.itemId) {
             R.id.item_add -> { presenter.doAddProperty() }
             R.id.item_map -> { presenter.doShowPropertiesMap() }
+            R.id.item_logout -> {
+                GlobalScope.launch(Dispatchers.IO) {
+                presenter.doLogout()
+            }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -60,6 +73,13 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     override fun onPropertyClick(property: PropertyModel) {
         presenter.doEditProperty(property)
 
+    }
+
+    private fun updateRecyclerView(){
+        GlobalScope.launch(Dispatchers.Main){
+            binding.recyclerView.adapter =
+                PropertyAdapter(presenter.getProperties(), this@PropertyListView)
+        }
     }
 
 }

@@ -28,7 +28,7 @@ import timber.log.Timber.i
 class PropertyPresenter(private val view: PropertyView) {
     var map: GoogleMap? = null
     var property = PropertyModel()
-
+    var locationManualyChanged = false;
     var app: MainApp = view.application as MainApp
 
     var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
@@ -54,13 +54,13 @@ class PropertyPresenter(private val view: PropertyView) {
             if (checkLocationPermissions(view)) {
                 doSetCurrentLocation()
             }
-            property.lat = location.lat
-            property.lng = location.lng
+            property.location.lat = location.lat
+            property.location.lng = location.lng
         }
     }
 
 
-    fun doAddOrSave(title: String, description: String, type: String, status: String) {
+    suspend fun doAddOrSave(title: String, description: String, type: String, status: String) {
         property.title = title
         property.description = description
         property.type = type
@@ -80,7 +80,7 @@ class PropertyPresenter(private val view: PropertyView) {
 
     }
 
-    fun doDelete() {
+   suspend fun doDelete() {
         app.properties.delete(property)
         view.finish()
 
@@ -91,12 +91,12 @@ class PropertyPresenter(private val view: PropertyView) {
     }
 
     fun doSetLocation() {
-
-        if (property.zoom != 0f) {
-            location.lat =  property.lat
-            location.lng = property.lng
-            location.zoom = property.zoom
-            locationUpdate(property.lat, property.lng)
+        locationManualyChanged = true
+        if (property.location.zoom != 0f) {
+            location.lat =  property.location.lat
+            location.lng = property.location.lng
+            location.zoom = property.location.zoom
+            locationUpdate(property.location.lat, property.location.lng)
         }
         val launcherIntent = Intent(view, EditLocationView::class.java)
             .putExtra("location", location)
@@ -119,27 +119,28 @@ class PropertyPresenter(private val view: PropertyView) {
     }
     fun doConfigureMap(m: GoogleMap) {
         map = m
-        locationUpdate(property.lat, property.lng)
+        locationUpdate(property.location.lat, property.location.lng)
     }
 
     fun locationUpdate(lat: Double, lng: Double) {
-        property.lat = lat
-        property.lng = lng
-        property.zoom = 15f
+        property.location = location
         map?.clear()
         map?.uiSettings?.setZoomControlsEnabled(true)
-        val options = MarkerOptions().title(property.title).position(LatLng(property.lat, property.lng))
+        val options = MarkerOptions().title(property.title).position(LatLng(property.location.lat, property.location.lng))
         map?.addMarker(options)
-        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(property.lat, property.lng), property.zoom))
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(property.location.lat, property.location.lng), property.location.zoom))
         view.showProperty(property)
     }
+
     @SuppressLint("MissingPermission")
     fun doRestartLocationUpdates() {
         var locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult != null && locationResult.locations != null) {
                     val l = locationResult.locations.last()
-                    locationUpdate(l.latitude, l.longitude)
+                    if(!locationManualyChanged){
+                        locationUpdate(l.latitude, l.longitude)
+                    }
                 }
             }
         }
@@ -147,9 +148,6 @@ class PropertyPresenter(private val view: PropertyView) {
             locationService.requestLocationUpdates(locationRequest, locationCallback, null)
         }
     }
-
-
-
     private fun registerImagePickerCallback() {
 
         imageIntentLauncher =
@@ -159,7 +157,7 @@ class PropertyPresenter(private val view: PropertyView) {
                     AppCompatActivity.RESULT_OK -> {
                         if (result.data != null) {
                             Timber.i("Got Result ${result.data!!.data}")
-                            property.image = result.data!!.data!!
+                            property.image = result.data!!.data!!.toString()
                             view.updateImage(property.image)
                         }
                     }
@@ -179,9 +177,7 @@ class PropertyPresenter(private val view: PropertyView) {
                             Timber.i("Got Location ${result.data.toString()}")
                             val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             Timber.i("Location == $location")
-                            property.lat = location.lat
-                            property.lng = location.lng
-                            property.zoom = location.zoom
+                            property.location=location
                         } // end of if
                     }
                     AppCompatActivity.RESULT_CANCELED -> { } else -> { }
