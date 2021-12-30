@@ -5,6 +5,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 import org.wit.property_manager.views.propertylist.PropertyListener
 import org.wit.property_manager.databinding.ActivityPropertyListBinding
@@ -32,9 +35,10 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter =
-            PropertyAdapter(presenter.getProperties(), this)
-
+        GlobalScope.launch(Dispatchers.Main) {
+            binding.recyclerView.adapter =
+                PropertyAdapter(presenter.getProperties(), this@PropertyListView)
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
