@@ -8,5 +8,7 @@ interface PropertyStore {
     suspend fun update(property: PropertyModel)
     suspend fun delete(property: PropertyModel)
    // fun deleteByUser(id: Long)
-    suspend fun deleteAll()
+   // suspend fun deleteAll()
+    suspend fun clear()
+    //fun fetchProperties(): List<PropertyModel>
 }

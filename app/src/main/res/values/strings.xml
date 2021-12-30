@@ -27,8 +27,8 @@
     <string name="title_activity_user">Property Manager</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="hint_propertyType">Auction or Rental</string>
-    <string name="hint_propertyStatus">Occupied/Vacant/Sold etc.</string>
+    <string name="hint_propertyType">Type</string>
+    <string name="hint_propertyStatus">Status</string>
     <string name="button_deleteProperty">Delete</string>
     <string name="button_updateUser">Update</string>
     <string name="button_addUser">Add User</string>
@@ -41,7 +41,7 @@
     <string name="menu_save">SAVE</string>
     <string name="menu_mapmode">Show Map</string>
     <string name="menu_logout">Logout</string>
-    <string name="title_activity_property_maps">Map of All Placemarks </string>
+    <string name="title_activity_property_maps">Map of All Properties</string>
     <string name="title_activity_placemark_maps">Map of All Properties</string>
-    <string name="title_activity_login"> Signup/Login to Placemark</string>
+    <string name="title_activity_login"> Signup/Login</string>
 </resources>

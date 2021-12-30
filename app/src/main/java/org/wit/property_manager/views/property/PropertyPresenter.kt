@@ -28,7 +28,7 @@ import timber.log.Timber.i
 class PropertyPresenter(private val view: PropertyView) {
     var map: GoogleMap? = null
     var property = PropertyModel()
-
+    var locationManualyChanged = false;
     var app: MainApp = view.application as MainApp
 
     var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
@@ -91,7 +91,7 @@ class PropertyPresenter(private val view: PropertyView) {
     }
 
     fun doSetLocation() {
-
+        locationManualyChanged = true
         if (property.location.zoom != 0f) {
             location.lat =  property.location.lat
             location.lng = property.location.lng
@@ -138,7 +138,9 @@ class PropertyPresenter(private val view: PropertyView) {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult != null && locationResult.locations != null) {
                     val l = locationResult.locations.last()
-                    locationUpdate(l.latitude, l.longitude)
+                    if(!locationManualyChanged){
+                        locationUpdate(l.latitude, l.longitude)
+                    }
                 }
             }
         }
@@ -155,7 +157,7 @@ class PropertyPresenter(private val view: PropertyView) {
                     AppCompatActivity.RESULT_OK -> {
                         if (result.data != null) {
                             Timber.i("Got Result ${result.data!!.data}")
-                            property.image = result.data!!.data!!
+                            property.image = result.data!!.data!!.toString()
                             view.updateImage(property.image)
                         }
                     }

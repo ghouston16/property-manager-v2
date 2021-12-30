@@ -113,11 +113,11 @@ class PropertyView : AppCompatActivity() {
         if (binding.description.text.isEmpty()) binding.description.setText(property.description)
         if (binding.propertyType.text.isEmpty()) binding.propertyType.setText(property.type)
         if (binding.propertyStatus.text.isEmpty()) binding.propertyStatus.setText(property.status)
-        Picasso.get()
-            .load(property.image)
-            .into(binding.propertyImage)
 
-        if (property.image != Uri.EMPTY) {
+        if (property.image != "") {
+            Picasso.get()
+                .load(property.image)
+                .into(binding.propertyImage)
             binding.chooseImage.setText(R.string.change_property_image)
         }
         binding.lat.setText("%.6f".format(property.location.lat))
@@ -125,7 +125,7 @@ class PropertyView : AppCompatActivity() {
 
     }
 
-    fun updateImage(image: Uri) {
+    fun updateImage(image: String) {
         i("Image updated")
         Picasso.get()
             .load(image)

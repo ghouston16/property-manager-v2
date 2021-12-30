@@ -34,10 +34,12 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>,
         fun bind(property: PropertyModel, listener: PropertyListener) {
             binding.propertyTitle.text = property.title
             binding.description.text = property.description
-            Picasso.get()
-                .load(property.image)
-                .resize(200,200)
-                .into(binding.imageIcon)
+            if (property.image != "") {
+                Picasso.get()
+                    .load(property.image)
+                    .resize(200, 200)
+                    .into(binding.imageIcon)
+            }
             binding.root.setOnClickListener { listener.onPropertyClick(property) }
         }
     }
