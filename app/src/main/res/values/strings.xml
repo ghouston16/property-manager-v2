@@ -39,8 +39,7 @@
     <string name="menu_deleteAll">Delete</string>
     <string name="menu_view_properties">Properties</string>
     <string name="menu_save">SAVE</string>
-    <string name="menu_settings">SAVE</string>
-    <string name="menu_showMap">Show Map</string>
+    <string name="menu_mapmode">Show Map</string>
     <string name="menu_logout">Logout</string>
     <string name="title_activity_property_maps">Map of All Placemarks </string>
     <string name="title_activity_placemark_maps">Map of All Properties</string>
