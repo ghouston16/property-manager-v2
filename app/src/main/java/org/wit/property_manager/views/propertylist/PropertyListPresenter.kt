@@ -2,6 +2,7 @@ package org.wit.property_manager.views.propertylist
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,7 +41,9 @@ class PropertyListPresenter(private val view: PropertyListView) {
         val launcherIntent = Intent(view, PropertyMapsView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }
-    fun doLogout(){
+    suspend fun doLogout(){
+        FirebaseAuth.getInstance().signOut()
+        app.properties.clear()
         val launcherIntent = Intent(view, LoginView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }

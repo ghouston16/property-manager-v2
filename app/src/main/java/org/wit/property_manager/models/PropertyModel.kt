@@ -11,8 +11,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class PropertyModel(@PrimaryKey(autoGenerate = true)var id: Long = 0, var title: String = "",
+                         var fbId: String = "",
                          var description: String = "",
-                         var image: Uri = Uri.EMPTY,
+                         var image: String = "",
                          var type: String = "",
                          var status : String = "",
                         // var agent : Long = 0,

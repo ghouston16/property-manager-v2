@@ -18,7 +18,7 @@ class MainApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        properties = PropertyStoreRoom(applicationContext)
+        properties = PropertyFireStore(applicationContext)
         users= UserJSONStore(applicationContext)
         i("Property started")
     }

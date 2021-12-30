@@ -33,11 +33,12 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
         }
     }
 
-    override suspend  fun findAll(): MutableList<PropertyModel> {
+    override suspend fun findAll(): MutableList<PropertyModel> {
         logAll()
         return properties
     }
-/*
+
+    /*
     override fun findAll(id: Long): MutableList<PropertyModel> {
         properties = findAll()
         for (property in properties){
@@ -50,7 +51,7 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
     }
 
  */
-    override suspend fun findById(id:Long) : PropertyModel? {
+    override suspend fun findById(id: Long): PropertyModel? {
         val foundPlacemark: PropertyModel? = properties.find { it.id == id }
         return foundPlacemark
     }
@@ -71,21 +72,23 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
             foundProperty.description = property.description
             foundProperty.type = property.type
             foundProperty.status = property.status
-          //  foundProperty.agent = property.agent
+            //  foundProperty.agent = property.agent
             foundProperty.image = property.image
             foundProperty.location = property.location
             logAll()
         }
         serialize()
     }
+
     override suspend fun delete(property: PropertyModel) {
         val foundPlacemark: PropertyModel? = properties.find {
-            it.id == property.id }
+            it.id == property.id
+        }
         properties.remove(foundPlacemark)
         serialize()
         //properties.remove(property)
-       // userProperties.remove(property)
-       // userProperties.clear()
+        // userProperties.remove(property)
+        // userProperties.clear()
         serialize()
     }
     /*
@@ -99,12 +102,13 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
     }
 
      */
-
+/*
     override suspend fun deleteAll() {
         properties.clear()
         serialize()
     }
 
+ */
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(properties, listType)
         write(context, JSON_FILE, jsonString)
@@ -118,8 +122,11 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
     private fun logAll() {
         properties.forEach { Timber.i("$it") }
     }
-}
 
+    override suspend fun clear() {
+        properties.clear()
+    }
+}
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
     override fun deserialize(
         json: JsonElement?,

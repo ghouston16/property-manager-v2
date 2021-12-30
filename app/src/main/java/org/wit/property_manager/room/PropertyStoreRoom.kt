@@ -37,10 +37,7 @@ class PropertyStoreRoom(val context: Context) : PropertyStore {
         dao.deleteProperty(property)
     }
 
-    override suspend fun deleteAll() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun clear(){
 
-    fun clear() {
     }
 }
