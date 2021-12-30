@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_map.xml" value="0.20094057289439932" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_property.xml" value="0.18" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_property_list.xml" value="0.22274476271911073" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_property_maps.xml" value="0.22274476271911073" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/content_property_maps.xml" value="0.2407874810701666" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/menu/menu_admin.xml" value="0.22274476271911073" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/menu/menu_main.xml" value="0.1" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/menu/menu_property.xml" value="0.22274476271911073" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/menu/menu_user.xml" value="0.22274476271911073" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/layout/activity_property.xml" value="0.25" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/layout/activity_property_map.xml" value="0.8947368421052632" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/layout/activity_property_maps.xml" value="0.1" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/layout/card_property.xml" value="0.1" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/layout/content_property_maps.xml" value="0.1" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/layout/fragment_second.xml" value="0.7035714285714286" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/menu/menu_admin.xml" value="0.7035714285714286" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1/app/src/main/res/menu/menu_main.xml" value="1.2321428571428572" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
