@@ -181,6 +181,7 @@ class UserActivity : AppCompatActivity() {
                 finish()
             }
         }
+        /*
         when (item.itemId) {
             R.id.item_settings -> {
                 var user = UserModel()
@@ -190,6 +191,8 @@ class UserActivity : AppCompatActivity() {
                 startActivityForResult(launcherIntent, 0)
             }
         }
+
+         */
         return super.onOptionsItemSelected(item)
     }
 

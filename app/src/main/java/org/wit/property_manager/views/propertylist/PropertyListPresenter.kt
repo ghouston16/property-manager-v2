@@ -8,16 +8,15 @@ import kotlinx.coroutines.launch
 //import org.wit.property_manager.activities.PropertyMapsActivity
 import org.wit.property_manager.main.MainApp
 import org.wit.property_manager.models.PropertyModel
+import org.wit.property_manager.views.login.LoginView
 import org.wit.property_manager.views.map.PropertyMapsView
 import org.wit.property_manager.views.property.PropertyView
 
-
-class PropertyListPresenter(val view: PropertyListView) {
+class PropertyListPresenter(private val view: PropertyListView) {
 
     var app: MainApp = view.application as MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var editIntentLauncher : ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     init {
         registerEditCallback()
@@ -39,6 +38,10 @@ class PropertyListPresenter(val view: PropertyListView) {
 
     fun doShowPropertiesMap() {
         val launcherIntent = Intent(view, PropertyMapsView::class.java)
+        editIntentLauncher.launch(launcherIntent)
+    }
+    fun doLogout(){
+        val launcherIntent = Intent(view, LoginView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }
     private fun registerRefreshCallback() {
