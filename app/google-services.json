@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "394303161737",
+    "project_id": "propertymanager-gh",
+    "storage_bucket": "propertymanager-gh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394303161737:android:2c891a6df4aacfd9d48d58",
+        "android_client_info": {
+          "package_name": "org.wit.property_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394303161737-i1drdb1v0gdeb0pvs4qrevthntu6omko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8wF8bV6YbY6amQPn1Y4zZ4VGEGnK72OI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394303161737-i1drdb1v0gdeb0pvs4qrevthntu6omko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

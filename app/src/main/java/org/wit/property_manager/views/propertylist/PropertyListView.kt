@@ -24,21 +24,16 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     lateinit var presenter: PropertyListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        i("Recycler View Loaded")
+
         super.onCreate(savedInstanceState)
         binding = ActivityPropertyListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
         presenter = PropertyListPresenter(this)
-        //app = application as MainApp
-
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        GlobalScope.launch(Dispatchers.Main) {
-            binding.recyclerView.adapter =
-                PropertyAdapter(presenter.getProperties(), this@PropertyListView)
-        }
+        updateRecyclerView()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -46,10 +41,13 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     }
 
     override fun onResume() {
+
         //update the view
+        super.onResume()
+        updateRecyclerView()
         binding.recyclerView.adapter?.notifyDataSetChanged()
         i("recyclerView onResume")
-        super.onResume()
+
     }
 
 
@@ -57,6 +55,7 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         when (item.itemId) {
             R.id.item_add -> { presenter.doAddProperty() }
             R.id.item_map -> { presenter.doShowPropertiesMap() }
+            R.id.item_logout -> { presenter.doLogout() }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -64,6 +63,13 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     override fun onPropertyClick(property: PropertyModel) {
         presenter.doEditProperty(property)
 
+    }
+
+    private fun updateRecyclerView(){
+        GlobalScope.launch(Dispatchers.Main){
+            binding.recyclerView.adapter =
+                PropertyAdapter(presenter.getProperties(), this@PropertyListView)
+        }
     }
 
 }
