@@ -2,6 +2,9 @@ package org.wit.property_manager.views.propertylist
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 //import org.wit.property_manager.activities.PropertyMapsActivity
 import org.wit.property_manager.main.MainApp
 import org.wit.property_manager.models.PropertyModel
@@ -21,7 +24,7 @@ class PropertyListPresenter(val view: PropertyListView) {
         registerRefreshCallback()
     }
 
-    fun getProperties() = app.properties.findAll()
+    suspend fun getProperties() = app.properties.findAll()
 
     fun doAddProperty() {
         val launcherIntent = Intent(view, PropertyView::class.java)
@@ -41,7 +44,11 @@ class PropertyListPresenter(val view: PropertyListView) {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { getProperties() }
+            {
+                GlobalScope.launch(Dispatchers.Main){
+                    getProperties()
+                }
+            }
     }
     private fun registerEditCallback() {
         editIntentLauncher =

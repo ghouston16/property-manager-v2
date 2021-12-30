@@ -33,7 +33,7 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
         }
     }
 
-    override fun findAll(): MutableList<PropertyModel> {
+    override suspend  fun findAll(): MutableList<PropertyModel> {
         logAll()
         return properties
     }
@@ -50,21 +50,20 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
     }
 
  */
-    override fun findById(id:Long) : PropertyModel? {
+    override suspend fun findById(id:Long) : PropertyModel? {
         val foundPlacemark: PropertyModel? = properties.find { it.id == id }
         return foundPlacemark
     }
 
 
-    override fun create(property: PropertyModel) {
+    override suspend fun create(property: PropertyModel) {
         property.id = generateRandomId()
         properties.add(property)
-        userProperties.clear()
         serialize()
     }
 
 
-    override fun update(property: PropertyModel) {
+    override suspend fun update(property: PropertyModel) {
         val propertyList = findAll() as ArrayList<PropertyModel>
         var foundProperty: PropertyModel? = propertyList.find { p -> p.id == property.id }
         if (foundProperty != null) {
@@ -74,15 +73,12 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
             foundProperty.status = property.status
           //  foundProperty.agent = property.agent
             foundProperty.image = property.image
-            foundProperty.lat = property.lat
-            foundProperty.lng = property.lng
-            foundProperty.zoom = property.zoom
+            foundProperty.location = property.location
             logAll()
         }
-        userProperties.clear()
         serialize()
     }
-    override fun delete(property: PropertyModel) {
+    override suspend fun delete(property: PropertyModel) {
         val foundPlacemark: PropertyModel? = properties.find {
             it.id == property.id }
         properties.remove(foundPlacemark)
@@ -104,7 +100,7 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
 
      */
 
-    override fun deleteAll() {
+    override suspend fun deleteAll() {
         properties.clear()
         serialize()
     }
