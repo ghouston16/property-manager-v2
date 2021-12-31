@@ -28,8 +28,8 @@ class LoginPresenter(val view: LoginView) {
     var app: MainApp = view.application as MainApp
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var fireStore: PropertyFireStore? = null
-    var liveFirebaseUser = MutableLiveData<FirebaseUser>()
-    var errorStatus = MutableLiveData<Boolean>()
+  //  var liveFirebaseUser = MutableLiveData<FirebaseUser>()
+  //  var errorStatus = MutableLiveData<Boolean>()
     private lateinit var startForResult: ActivityResultLauncher<Intent>
 
     // Google Auth
@@ -146,10 +146,9 @@ class LoginPresenter(val view: LoginView) {
                                 Timber.i("Google sign in failed $e")
                                 view.showSnackBar("Login failed: ${task.exception?.message}")
                             }
-                            Timber.i("DonationX Google Result $result.data")
+                            Timber.i("Property Manager Google Result $result.data")
                         }
                         RESULT_CANCELED -> {
-
                         }
                         else -> {}
                     }
