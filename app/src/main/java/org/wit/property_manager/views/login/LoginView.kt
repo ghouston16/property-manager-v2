@@ -3,6 +3,8 @@ package org.wit.property_manager.views.login
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.SignInButton
 import com.google.android.material.snackbar.Snackbar
 import org.wit.property_manager.databinding.ActivityLoginBinding
 
@@ -27,6 +29,8 @@ class LoginView : AppCompatActivity(){
             else {
                 presenter.doSignUp(email,password)
             }
+            binding.googleSignInButton.setSize(SignInButton.SIZE_WIDE)
+            binding.googleSignInButton.setColorScheme(0)
         }
 
         binding.logIn.setOnClickListener {
@@ -40,6 +44,9 @@ class LoginView : AppCompatActivity(){
                 presenter.doLogin(email,password)
             }
         }
+        binding.googleSignInButton.setOnClickListener{
+            presenter.googleSignIn()
+        }
     }
     fun showSnackBar(message: CharSequence){
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
@@ -52,4 +59,8 @@ class LoginView : AppCompatActivity(){
     fun hideProgress() {
         binding.progressBar.visibility = View.GONE
     }
+    fun authWithGoogle(acct: GoogleSignInAccount) {
+        presenter.firebaseAuthWithGoogle(acct)
+    }
+
 }
