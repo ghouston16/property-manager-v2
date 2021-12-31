@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Query
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -16,6 +20,7 @@ import org.wit.property_manager.main.MainApp
 import org.wit.property_manager.R
 import org.wit.property_manager.views.propertylist.PropertyAdapter
 import org.wit.property_manager.models.PropertyModel
+import org.wit.property_manager.utils.SwipeToDeleteCallback
 import timber.log.Timber.i
 
 class PropertyListView : AppCompatActivity(), PropertyListener {
@@ -38,10 +43,24 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
             }
         setSupportActionBar(binding.toolbar)
         presenter = PropertyListPresenter(this)
+        setSwipeRefresh()
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         updateRecyclerView()
+
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.recyclerView.adapter as PropertyAdapter
+                deleteProperty(viewHolder.itemView.tag as String)
+            }
+        }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(binding.recyclerView)
+
+
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -74,6 +93,12 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         presenter.doEditProperty(property)
 
     }
+    fun deleteProperty(id: String){
+        i("Delete: deleteProperty")
+        GlobalScope.launch(Dispatchers.Main) {
+            presenter.doDeleteProperty(id)
+        }
+    }
 
     private fun updateRecyclerView(){
         GlobalScope.launch(Dispatchers.Main){
@@ -81,5 +106,19 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
                 PropertyAdapter(presenter.getProperties(), this@PropertyListView)
         }
     }
+    fun setSwipeRefresh() {
+        binding.swiperefresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                binding.swiperefresh.isRefreshing = true
+                GlobalScope.launch(Dispatchers.Main) {
+                    presenter.getProperties()
 
+                }
+            }
+        })
+    }
+
+    fun checkSwipeRefresh() {
+        if (binding.swiperefresh.isRefreshing) binding.swiperefresh.isRefreshing = false
+    }
 }

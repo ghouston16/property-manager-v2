@@ -14,9 +14,13 @@ interface PropertyDao {
     @Query("select * from PropertyModel where id = :id")
     suspend fun findById(id: Long): PropertyModel
 
+    @Query("select * from PropertyModel where Fbid = :id")
+    suspend fun findByFbId(id: String): PropertyModel
+
     @Update
     suspend fun update(property: PropertyModel)
 
     @Delete
     suspend fun deleteProperty(property: PropertyModel)
+
 }

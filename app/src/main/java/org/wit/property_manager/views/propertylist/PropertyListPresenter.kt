@@ -12,6 +12,7 @@ import org.wit.property_manager.models.PropertyModel
 import org.wit.property_manager.views.login.LoginView
 import org.wit.property_manager.views.map.PropertyMapsView
 import org.wit.property_manager.views.property.PropertyView
+import timber.log.Timber.i
 
 class PropertyListPresenter(private val view: PropertyListView) {
 
@@ -36,11 +37,22 @@ class PropertyListPresenter(private val view: PropertyListView) {
         launcherIntent.putExtra("property_edit", property)
         editIntentLauncher.launch(launcherIntent)
     }
+    suspend fun doDeleteProperty(id: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            i("Deleting Property")
+            val property = app.properties.findByFbId(id)
+            if (property != null) app.properties.delete(property)
+            getProperties()
+
+        }
+    }
 
     fun doShowPropertiesMap() {
         val launcherIntent = Intent(view, PropertyMapsView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }
+
+
     suspend fun doLogout(){
         FirebaseAuth.getInstance().signOut()
         app.properties.clear()

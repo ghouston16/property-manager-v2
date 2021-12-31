@@ -10,5 +10,6 @@ interface PropertyStore {
    // fun deleteByUser(id: Long)
    // suspend fun deleteAll()
     suspend fun clear()
+    suspend fun findByFbId(id: String): PropertyModel?
     //fun fetchProperties(): List<PropertyModel>
 }

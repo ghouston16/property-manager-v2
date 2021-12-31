@@ -25,13 +25,13 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>,
         val property = properties[holder.adapterPosition]
         holder.bind(property, listener)
     }
-
     override fun getItemCount(): Int = properties.size
 
     class MainHolder(private val binding : CardPropertyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(property: PropertyModel, listener: PropertyListener) {
+            binding.root.tag = property
             binding.propertyTitle.text = property.title
             binding.description.text = property.description
             if (property.image != "") {
