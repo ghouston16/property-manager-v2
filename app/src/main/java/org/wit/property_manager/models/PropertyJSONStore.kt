@@ -33,10 +33,16 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
         }
     }
 
-    override suspend fun findAll(): MutableList<PropertyModel> {
+    override suspend fun findAll(): List<PropertyModel> {
         logAll()
         return properties
     }
+    override suspend fun findByFbId(id: String): PropertyModel? {
+        val foundProperty: PropertyModel? = properties.find { p -> p.fbId === id}
+        return foundProperty
+    }
+
+
 
     /*
     override fun findAll(id: Long): MutableList<PropertyModel> {

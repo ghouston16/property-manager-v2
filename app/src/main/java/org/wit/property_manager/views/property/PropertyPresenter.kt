@@ -196,5 +196,6 @@ class PropertyPresenter(private val view: PropertyView) {
                     locationUpdate(location.lat, location.lng)
                 }
             }
+
     }
 }

@@ -12,6 +12,7 @@ import org.wit.property_manager.models.PropertyModel
 import org.wit.property_manager.views.login.LoginView
 import org.wit.property_manager.views.map.PropertyMapsView
 import org.wit.property_manager.views.property.PropertyView
+import timber.log.Timber.i
 
 class PropertyListPresenter(private val view: PropertyListView) {
 
@@ -32,15 +33,38 @@ class PropertyListPresenter(private val view: PropertyListView) {
     }
 
     fun doEditProperty(property: PropertyModel) {
-        val launcherIntent = Intent(view, PropertyView::class.java)
-        launcherIntent.putExtra("property_edit", property)
-        editIntentLauncher.launch(launcherIntent)
+            i("$property")
+            val launcherIntent = Intent(view, PropertyView::class.java)
+            launcherIntent.putExtra("property_edit", property)
+            editIntentLauncher.launch(launcherIntent)
+    }
+    suspend fun doDeleteProperty(id: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            i("Deleting Property")
+            val property = app.properties.findByFbId(id)
+            if (property != null) app.properties.delete(property)
+            getProperties()
+
+        }
+    }
+    fun doSwipeEdit(id: String){
+        GlobalScope.launch(Dispatchers.Main) {
+            i("Getting Object $id from DB")
+            val property = app.properties.findByFbId(id)
+            if (property != null) {
+                i("Open Editor: $property")
+                doEditProperty(property)
+            }
+        }
     }
 
-    fun doShowPropertiesMap() {
+
+        fun doShowPropertiesMap() {
         val launcherIntent = Intent(view, PropertyMapsView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }
+
+
     suspend fun doLogout(){
         FirebaseAuth.getInstance().signOut()
         app.properties.clear()

@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.wit.property_manager.databinding.CardPropertyBinding
 import org.wit.property_manager.models.PropertyModel
+
 interface PropertyListener {
     fun onPropertyClick(property: PropertyModel)
 }
 
-class PropertyAdapter constructor(private var properties: List<PropertyModel>,
-                                   private val listener: PropertyListener) :
+class PropertyAdapter constructor(
+    private var properties: ArrayList<PropertyModel>,
+    private val listener: PropertyListener,
+) :
     RecyclerView.Adapter<PropertyAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -28,10 +31,11 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>,
 
     override fun getItemCount(): Int = properties.size
 
-    class MainHolder(private val binding : CardPropertyBinding) :
+    class MainHolder(private val binding: CardPropertyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(property: PropertyModel, listener: PropertyListener) {
+            binding.root.tag = property.fbId
             binding.propertyTitle.text = property.title
             binding.description.text = property.description
             if (property.image != "") {

@@ -12,7 +12,7 @@ class PropertyMemStore : PropertyStore {
     val properties = ArrayList<PropertyModel>()
     val userProperties = ArrayList<PropertyModel>()
 
-    override suspend fun findAll(): List<PropertyModel> {
+    override suspend fun findAll(): ArrayList<PropertyModel> {
         return properties
     }
     /*
@@ -32,6 +32,12 @@ class PropertyMemStore : PropertyStore {
         properties.add(property)
         logAll()
     }
+    override suspend fun findByFbId(id: String): PropertyModel? {
+        val foundProperty: PropertyModel? = properties.find { p -> p.fbId === id}
+        return foundProperty
+    }
+
+
 
     override suspend fun delete(property: PropertyModel) {
         properties.remove(property)
