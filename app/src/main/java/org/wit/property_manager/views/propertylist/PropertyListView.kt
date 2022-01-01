@@ -21,6 +21,7 @@ import org.wit.property_manager.R
 import org.wit.property_manager.views.propertylist.PropertyAdapter
 import org.wit.property_manager.models.PropertyModel
 import org.wit.property_manager.utils.SwipeToDeleteCallback
+import org.wit.property_manager.utils.SwipeToEditCallback
 import timber.log.Timber.i
 
 class PropertyListView : AppCompatActivity(), PropertyListener {
@@ -29,12 +30,13 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     lateinit var binding: ActivityPropertyListBinding
     lateinit var presenter: PropertyListPresenter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
             super.onCreate(savedInstanceState)
             binding = ActivityPropertyListBinding.inflate(layoutInflater)
             setContentView(binding.root)
-
+            app = application as MainApp
             //update Toolbar title
             binding.toolbar.title = title
             val user = FirebaseAuth.getInstance().currentUser
@@ -58,8 +60,18 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
         itemTouchDeleteHelper.attachToRecyclerView(binding.recyclerView)
 
+        val swipeEditHandler = object : SwipeToEditCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = binding.recyclerView.adapter as PropertyAdapter
+                    val foundProperty = viewHolder.itemView.tag as String
+                    i("Found property: $foundProperty")
+                    onPropertySwipe(foundProperty)
+            }
+        }
+                val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+                itemTouchEditHelper.attachToRecyclerView(binding.recyclerView)
+            }
 
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -90,9 +102,14 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
     }
 
     override fun onPropertyClick(property: PropertyModel) {
-        presenter.doEditProperty(property)
+            i("property selected")
+            presenter.doEditProperty(property)
 
     }
+    fun onPropertySwipe(id: String){
+        presenter.doSwipeEdit(id)
+    }
+
     fun deleteProperty(id: String){
         i("Delete: deleteProperty")
         GlobalScope.launch(Dispatchers.Main) {

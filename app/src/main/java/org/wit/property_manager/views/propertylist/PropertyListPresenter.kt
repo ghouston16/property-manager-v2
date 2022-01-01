@@ -33,9 +33,10 @@ class PropertyListPresenter(private val view: PropertyListView) {
     }
 
     fun doEditProperty(property: PropertyModel) {
-        val launcherIntent = Intent(view, PropertyView::class.java)
-        launcherIntent.putExtra("property_edit", property)
-        editIntentLauncher.launch(launcherIntent)
+            i("$property")
+            val launcherIntent = Intent(view, PropertyView::class.java)
+            launcherIntent.putExtra("property_edit", property)
+            editIntentLauncher.launch(launcherIntent)
     }
     suspend fun doDeleteProperty(id: String) {
         GlobalScope.launch(Dispatchers.Main) {
@@ -46,8 +47,19 @@ class PropertyListPresenter(private val view: PropertyListView) {
 
         }
     }
+    fun doSwipeEdit(id: String){
+        GlobalScope.launch(Dispatchers.Main) {
+            i("Getting Object $id from DB")
+            val property = app.properties.findByFbId(id)
+            if (property != null) {
+                i("Open Editor: $property")
+                doEditProperty(property)
+            }
+        }
+    }
 
-    fun doShowPropertiesMap() {
+
+        fun doShowPropertiesMap() {
         val launcherIntent = Intent(view, PropertyMapsView::class.java)
         editIntentLauncher.launch(launcherIntent)
     }
