@@ -97,13 +97,14 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         i("Delete: deleteProperty")
         GlobalScope.launch(Dispatchers.Main) {
             presenter.doDeleteProperty(id)
+            updateRecyclerView()
         }
     }
 
     private fun updateRecyclerView(){
         GlobalScope.launch(Dispatchers.Main){
             binding.recyclerView.adapter =
-                PropertyAdapter(presenter.getProperties(), this@PropertyListView)
+                PropertyAdapter(ArrayList<PropertyModel>(presenter.getProperties()), this@PropertyListView)
         }
     }
     fun setSwipeRefresh() {

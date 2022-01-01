@@ -10,7 +10,7 @@ interface PropertyListener {
     fun onPropertyClick(property: PropertyModel)
 }
 
-class PropertyAdapter constructor(private var properties: List<PropertyModel>,
+class PropertyAdapter constructor(private var properties: ArrayList<PropertyModel>,
                                    private val listener: PropertyListener) :
     RecyclerView.Adapter<PropertyAdapter.MainHolder>() {
 
@@ -31,7 +31,7 @@ class PropertyAdapter constructor(private var properties: List<PropertyModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(property: PropertyModel, listener: PropertyListener) {
-            binding.root.tag = property
+            binding.root.tag = property.fbId
             binding.propertyTitle.text = property.title
             binding.description.text = property.description
             if (property.image != "") {
