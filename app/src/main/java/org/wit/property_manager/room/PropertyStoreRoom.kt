@@ -25,6 +25,10 @@ class PropertyStoreRoom(val context: Context) : PropertyStore {
         return dao.findById(id)
     }
 
+    override suspend fun findByFbId(id: String): PropertyModel? {
+        return null
+    }
+
     override suspend fun create(property: PropertyModel) {
         dao.create(property)
     }

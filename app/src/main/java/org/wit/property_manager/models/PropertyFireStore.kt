@@ -35,6 +35,11 @@ class PropertyFireStore(val context: Context) : PropertyStore {
             updateImage(property)
         }
     }
+    override suspend fun findByFbId(id: String): PropertyModel? {
+        val foundProperty: PropertyModel? = properties.find { p -> p.fbId === id}
+        return foundProperty
+    }
+
 
     override suspend fun update(property: PropertyModel) {
         var foundProperty: PropertyModel? = properties.find { p -> p.fbId == property.fbId }
