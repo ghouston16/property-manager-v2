@@ -16,6 +16,7 @@ data class PropertyModel(@PrimaryKey(autoGenerate = true)var id: Long = 0, var t
                          var image: String = "",
                          var type: String = "",
                          var status : String = "",
+                         var favourite: Boolean= false,
                         // var agent : Long = 0,
                          @Embedded var location: Location = Location()): Parcelable
                        /*  var lat : Double = 0.0,

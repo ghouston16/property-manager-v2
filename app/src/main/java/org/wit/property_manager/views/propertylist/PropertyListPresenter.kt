@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 //import org.wit.property_manager.activities.PropertyMapsActivity
 import org.wit.property_manager.main.MainApp
 import org.wit.property_manager.models.PropertyModel
@@ -38,6 +39,13 @@ class PropertyListPresenter(private val view: PropertyListView) {
             launcherIntent.putExtra("property_edit", property)
             editIntentLauncher.launch(launcherIntent)
     }
+    fun doFavourite(property: PropertyModel, favourite: Boolean) {
+        property.favourite = favourite
+        GlobalScope.launch(Dispatchers.Main) {
+            app.properties.setFavourite(property)
+        }
+    }
+
     suspend fun doDeleteProperty(id: String) {
         GlobalScope.launch(Dispatchers.Main) {
             i("Deleting Property")

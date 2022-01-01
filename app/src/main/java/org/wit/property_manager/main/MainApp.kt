@@ -11,15 +11,15 @@ import timber.log.Timber.i
 class MainApp : Application() {
 
     lateinit var properties: PropertyStore
-    val user = UserModel()
-    lateinit var users : UserStore
+   // val user = UserModel()
+   // lateinit var users : UserStore
     //bval admin = "gh@wit.ie"
 
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         properties = PropertyFireStore(applicationContext)
-        users= UserJSONStore(applicationContext)
+     //   users= UserJSONStore(applicationContext)
         i("Property started")
     }
 }

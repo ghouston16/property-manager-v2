@@ -135,6 +135,12 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
             }
         })
     }
+    override fun onFavouriteClick(property: PropertyModel, favourite: Boolean) {
+        GlobalScope.launch(Dispatchers.Main) {
+            presenter.doFavourite(property, favourite)
+        }
+    }
+
 
     fun checkSwipeRefresh() {
         if (binding.swiperefresh.isRefreshing) binding.swiperefresh.isRefreshing = false
