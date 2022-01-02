@@ -5,7 +5,7 @@
     <item
         android:id="@+id/item_favourites"
         android:icon="@drawable/ic_menu_toggle_off"
-        android:title="@string/menu_addProperty"
+        android:title="@string/menu_favourites"
         app:showAsAction="always"/>
 
     <item

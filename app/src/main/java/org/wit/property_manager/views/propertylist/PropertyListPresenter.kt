@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
+import org.wit.property_manager.databinding.ActivityPropertyListBinding
 //import org.wit.property_manager.activities.PropertyMapsActivity
 import org.wit.property_manager.main.MainApp
 import org.wit.property_manager.models.PropertyModel
@@ -20,10 +21,12 @@ class PropertyListPresenter(private val view: PropertyListView) {
     var app: MainApp = view.application as MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var editIntentLauncher : ActivityResultLauncher<Intent>
+   // private lateinit var binding: ActivityPropertyListBinding
 
     init {
         registerEditCallback()
         registerRefreshCallback()
+
     }
 
     suspend fun getProperties() = app.properties.findAll()

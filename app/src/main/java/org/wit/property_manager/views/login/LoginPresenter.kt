@@ -77,6 +77,7 @@ class LoginPresenter(val view: LoginView) {
                     view?.hideProgress()
                     val launcherIntent = Intent(view, PropertyListView::class.java)
                     loginIntentLauncher.launch(launcherIntent)
+                    view.showProgress()
                 }
             } else {
                 view.showSnackBar("Login failed: ${task.exception?.message}")
@@ -127,7 +128,7 @@ class LoginPresenter(val view: LoginView) {
 
         fun googleSignIn() {
             val signInIntent = googleSignInClient.value!!.signInIntent
-
+            view.showProgress()
             startForResult.launch(signInIntent)
         }
 
