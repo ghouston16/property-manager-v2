@@ -45,6 +45,18 @@ class PropertyListPresenter(private val view: PropertyListView) {
             app.properties.setFavourite(property)
         }
     }
+    // Get Favourites and pass to view
+    suspend fun doShowFavourites(): MutableList<PropertyModel> {
+        var properties = app.properties.findAll()
+        var favourites = mutableListOf<PropertyModel>()
+            for (x in properties) {
+                if (x.favourite) {
+                    favourites.add(x)
+                }
+            }
+                    i("$favourites")
+                    return favourites
+            }
 
     suspend fun doDeleteProperty(id: String) {
         GlobalScope.launch(Dispatchers.Main) {

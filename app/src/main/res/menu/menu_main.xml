@@ -3,24 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/item_favourites"
+        android:icon="@drawable/ic_menu_toggle_off"
+        android:title="@string/menu_addProperty"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/item_add"
-        android:enabled="true"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/menu_addProperty"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/item_map"
-        android:enabled="true"
         android:icon="@android:drawable/ic_menu_mapmode"
-        android:iconTint="#452A77"
         android:title="@string/menu_mapmode"
-        android:visible="true"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/item_logout"
-        android:enabled="true"
         android:title="@string/menu_logout"
-        app:showAsAction="collapseActionView" />
+        app:showAsAction="never" />
 </menu>

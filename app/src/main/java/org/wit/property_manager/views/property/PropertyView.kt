@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.wit.property_manager.R
 import org.wit.property_manager.databinding.ActivityPropertyBinding
+import org.wit.property_manager.models.Location
 import org.wit.property_manager.models.PropertyModel
 import timber.log.Timber.i
 

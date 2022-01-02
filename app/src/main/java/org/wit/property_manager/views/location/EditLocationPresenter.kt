@@ -34,6 +34,7 @@ class EditLocationPresenter (val view: EditLocationView) {
     fun doUpdateLocation(lat: Double, lng: Double) {
         location.lat = lat
         location.lng = lng
+
     }
 
     fun doOnBackPressed() {
