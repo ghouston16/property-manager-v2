@@ -9,6 +9,7 @@ import org.wit.property_manager.models.PropertyModel
 
 interface PropertyListener {
     fun onPropertyClick(property: PropertyModel)
+    fun onFavouriteClick(property: PropertyModel, favourite: Boolean)
 }
 
 class PropertyAdapter constructor(
@@ -34,7 +35,13 @@ class PropertyAdapter constructor(
     class MainHolder(private val binding: CardPropertyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
         fun bind(property: PropertyModel, listener: PropertyListener) {
+            var favourite = property.favourite
+            if(favourite)
+            {
+                binding.favouriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+            }
             binding.root.tag = property.fbId
             binding.propertyTitle.text = property.title
             binding.description.text = property.description
@@ -45,6 +52,17 @@ class PropertyAdapter constructor(
                     .into(binding.imageIcon)
             }
             binding.root.setOnClickListener { listener.onPropertyClick(property) }
+            binding.favouriteButton.setOnClickListener {
+                if (favourite == true) {
+                    binding.favouriteButton.setImageResource(android.R.drawable.btn_star_big_off);
+                    favourite = false;
+                    listener.onFavouriteClick(property, favourite)
+                } else {
+                    binding.favouriteButton.setImageResource(android.R.drawable.btn_star_big_on);
+                    favourite = true;
+                    listener.onFavouriteClick(property, favourite)
+                }
+            }
         }
     }
 }

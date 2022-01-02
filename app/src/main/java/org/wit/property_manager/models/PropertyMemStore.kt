@@ -60,6 +60,17 @@ class PropertyMemStore : PropertyStore {
     }
 
      */
+    override suspend fun setFavourite(property: PropertyModel) {
+        var foundProperty: PropertyModel? = properties.find { p -> p.fbId == property.fbId }
+        if (foundProperty != null) {
+            foundProperty.favourite = property.favourite
+        }
+    }
+
+    override suspend fun getFavourites(): List<PropertyModel> {
+        val favourites = properties.filter{p-> p.favourite == true}
+        return favourites
+    }
 
     override suspend fun update(property: PropertyModel) {
         var foundProperty: PropertyModel? = properties.find { p -> p.id == property.id }

@@ -11,5 +11,7 @@ interface PropertyStore {
    // suspend fun deleteAll()
     suspend fun clear()
     suspend fun findByFbId(id: String): PropertyModel?
+    suspend fun getFavourites(): List<PropertyModel>
+    suspend fun setFavourite(property: PropertyModel)
     //fun fetchProperties(): List<PropertyModel>
 }

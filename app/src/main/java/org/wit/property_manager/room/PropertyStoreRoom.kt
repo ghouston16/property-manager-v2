@@ -44,4 +44,11 @@ class PropertyStoreRoom(val context: Context) : PropertyStore {
     override suspend fun clear(){
 
     }
+    override suspend fun setFavourite(property: PropertyModel) {
+        dao.setFavourite(property)
+        }
+
+    override suspend fun getFavourites(): List<PropertyModel> {
+        return dao.getFavourites()
+    }
 }

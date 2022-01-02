@@ -115,6 +115,18 @@ class PropertyJSONStore(private val context: Context) : PropertyStore {
     }
 
  */
+    override suspend fun setFavourite(property: PropertyModel) {
+        var foundProperty: PropertyModel? = properties.find { p -> p.fbId == property.fbId }
+        if (foundProperty != null) {
+            foundProperty.favourite = property.favourite
+        }
+    }
+
+    override suspend fun getFavourites(): List<PropertyModel> {
+        val favourites = properties.filter{p-> p.favourite == true}
+        return favourites
+    }
+
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(properties, listType)
         write(context, JSON_FILE, jsonString)

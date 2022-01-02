@@ -44,4 +44,5 @@
     <string name="title_activity_property_maps">Map of All Properties</string>
     <string name="title_activity_placemark_maps">Map of All Properties</string>
     <string name="title_activity_login"> Signup/Login</string>
+    <string name="favouritebutton">Favourite</string>
 </resources>

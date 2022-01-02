@@ -1,5 +1,5 @@
 package org.wit.property_manager.activities
-
+/*
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -248,3 +248,6 @@ class UserActivity : AppCompatActivity() {
             }
     }
 }
+
+
+ */

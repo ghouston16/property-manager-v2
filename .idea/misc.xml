@@ -3,15 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_baseline_toggle_off_24.xml" value="0.1725" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_baseline_toggle_on_24.xml" value="0.1725" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1725" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_swipe_delete.xml" value="0.1" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_swipe_edit.xml" value="0.1" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/activity_login.xml" value="0.11554534057668199" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/activity_map.xml" value="0.3009833262077811" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/activity_property.xml" value="0.15433946130825138" />
-        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/activity_property_list.xml" value="0.1330049261083744" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/activity_property_list.xml" value="0.1" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/activity_property_maps.xml" value="0.15433946130825138" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/card_property.xml" value="0.13809320222317228" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/layout/content_property_maps.xml" value="0.15433946130825138" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/menu/menu_admin.xml" value="0.1774262505344164" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/menu/menu_main.xml" value="0.225" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/menu/menu_property.xml" value="0.1774262505344164" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/menu/menu_user.xml" value="0.1774262505344164" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_map.xml" value="0.20094057289439932" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_property.xml" value="0.18" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManagerv1 - Copy/app/src/main/res/layout/activity_property_list.xml" value="0.22274476271911073" />
