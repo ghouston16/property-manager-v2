@@ -63,6 +63,7 @@ class PropertyAdapter constructor(
                     listener.onFavouriteClick(property, favourite)
                 }
             }
+
         }
     }
 }

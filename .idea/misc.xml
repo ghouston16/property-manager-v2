@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_add.xml" value="0.1" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_baseline_toggle_off_24.xml" value="0.1725" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_baseline_toggle_on_24.xml" value="0.1725" />
+        <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_favourite.xml" value="0.1" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1725" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_swipe_delete.xml" value="0.1" />
         <entry key="..\:/dev/mobile-app-dev/PropertyManager2.0/app/src/main/res/drawable/ic_swipe_edit.xml" value="0.1" />

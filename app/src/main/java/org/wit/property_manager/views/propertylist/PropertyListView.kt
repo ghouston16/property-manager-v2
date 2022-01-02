@@ -46,6 +46,7 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         checkSwipeRefresh()
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
+        binding.fab.setOnClickListener{ presenter.doAddProperty()}
         updateRecyclerView()
 
 
@@ -91,14 +92,12 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
             R.id.item_favourites -> {
                 if (!favouriteView) {
                     favouriteView = true
-                    item.setIcon(R.drawable.ic_baseline_toggle_on_24)
                     GlobalScope.launch(Dispatchers.Main)
                     {
                         favourites = presenter.doShowFavourites()
                         i("$favourites")
-                        if (favourites.size != 0) {
+                            item.setIcon(R.drawable.ic_baseline_toggle_on_24)
                             updateRecyclerView()
-                        }
                     }
                 } else {
                     favouriteView = false
@@ -110,6 +109,23 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
             R.id.item_add -> {
                 title = "Add"
                 presenter.doAddProperty()
+            }
+            R.id.item_favourites -> {
+                if (!favouriteView) {
+                    favouriteView = true
+                    GlobalScope.launch(Dispatchers.Main)
+                    {
+                        favourites = presenter.doShowFavourites()
+                        i("$favourites")
+                        item.setIcon(R.drawable.ic_baseline_toggle_on_24)
+                        updateRecyclerView()
+                    }
+                } else {
+                    favouriteView = false
+                    item.setIcon(R.drawable.ic_menu_toggle_off)
+                    updateRecyclerView()
+                }
+
             }
             R.id.item_map -> {
                 presenter.doShowPropertiesMap()
@@ -141,7 +157,7 @@ class PropertyListView : AppCompatActivity(), PropertyListener {
         }
     }
 
-    fun showFavs() {
+    fun showFavourites() {
         GlobalScope.launch(Dispatchers.Main)
         {
             favourites = presenter.doShowFavourites()
