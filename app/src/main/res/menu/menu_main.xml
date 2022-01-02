@@ -5,13 +5,17 @@
     <item
         android:id="@+id/item_favourites"
         android:icon="@drawable/ic_menu_toggle_off"
-        android:title="@string/menu_addProperty"
+        android:title="@string/menu_favourites"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/item_add"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/menu_addProperty"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item_favourite"
+        android:title="@string/menu_favourites"
         app:showAsAction="never" />
 
     <item
