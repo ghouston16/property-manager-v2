@@ -28,7 +28,6 @@ import timber.log.Timber.i
 class PropertyPresenter(private val view: PropertyView) {
     var map: GoogleMap? = null
     var property = PropertyModel()
-    var locationManualyChanged = false;
     var app: MainApp = view.application as MainApp
 
     var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
@@ -91,7 +90,6 @@ class PropertyPresenter(private val view: PropertyView) {
     }
 
     fun doSetLocation() {
-        locationManualyChanged = true
         if (property.location.zoom != 0f) {
             location.lat =  property.location.lat
             location.lng = property.location.lng
@@ -104,9 +102,11 @@ class PropertyPresenter(private val view: PropertyView) {
     }
     @SuppressLint("MissingPermission")
     fun doSetCurrentLocation() {
-        i("setting location from doSetLocation")
-        locationService.lastLocation.addOnSuccessListener {
-            locationUpdate(it.latitude, it.longitude)
+        if (!edit) {
+            i("setting location from doSetLocation")
+            locationService.lastLocation.addOnSuccessListener {
+                locationUpdate(it.latitude, it.longitude)
+            }
         }
     }
 
@@ -138,12 +138,12 @@ class PropertyPresenter(private val view: PropertyView) {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult != null && locationResult.locations != null) {
                     val l = locationResult.locations.last()
-                    if(!locationManualyChanged){
                         locationUpdate(l.latitude, l.longitude)
                     }
                 }
             }
-        }
+
+
         if (!edit) {
             locationService.requestLocationUpdates(locationRequest, locationCallback, null)
         }

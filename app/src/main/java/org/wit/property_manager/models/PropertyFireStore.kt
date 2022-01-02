@@ -116,6 +116,17 @@ class PropertyFireStore(val context: Context) : PropertyStore {
 
         }
     }
+    override suspend fun setFavourite(property: PropertyModel) {
+        var foundProperty: PropertyModel? = properties.find { p -> p.fbId == property.fbId }
+        if (foundProperty != null) {
+            foundProperty.favourite = property.favourite
+        }
+        db.child("users").child(userId).child("properties").child(property.fbId).setValue(property)
+    }
+    override suspend fun getFavourites(): List<PropertyModel> {
+        val favourites = properties.filter{p-> p.favourite == true}
+        return favourites
+    }
 }
 
 

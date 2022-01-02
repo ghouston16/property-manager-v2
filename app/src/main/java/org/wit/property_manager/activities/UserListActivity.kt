@@ -1,6 +1,6 @@
 
 package org.wit.property_manager.activities
-
+/*
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -27,7 +27,7 @@ class UserListActivity : AppCompatActivity(), UserListener {
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     val user = UserModel()
     var currentUser = UserModel()
-    var isAdmin = true
+  //  var isAdmin = true
    // val admin = UserModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,3 +109,4 @@ class UserListActivity : AppCompatActivity(), UserListener {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }
+ */

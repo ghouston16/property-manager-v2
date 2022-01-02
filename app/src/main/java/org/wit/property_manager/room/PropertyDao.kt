@@ -17,10 +17,16 @@ interface PropertyDao {
     @Query("select * from PropertyModel where Fbid = :id")
     suspend fun findByFbId(id: String): PropertyModel
 
+
     @Update
     suspend fun update(property: PropertyModel)
 
     @Delete
     suspend fun deleteProperty(property: PropertyModel)
 
+    @Query("select * from PropertyModel where favourite = 1")
+    suspend fun getFavourites(): List<PropertyModel>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setFavourite(property: PropertyModel)
 }

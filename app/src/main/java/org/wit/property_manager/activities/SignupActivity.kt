@@ -1,5 +1,5 @@
 package org.wit.property_manager.activities
-
+/*
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -126,3 +126,5 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 }
+
+ */
